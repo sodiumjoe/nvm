@@ -2652,8 +2652,8 @@ nvm() {
         return 3
       # This nvm_ensure_version_installed call can be a performance bottleneck
       # on shell startup. Perhaps we can optimize it away or make it faster.
-      elif ! nvm_ensure_version_installed "${VERSION}"; then
-        return $?
+      # elif ! nvm_ensure_version_installed "${VERSION}"; then
+      #   return $?
       fi
 
       local NVM_VERSION_DIR
@@ -2680,13 +2680,13 @@ nvm() {
         command rm -f "$NVM_DIR/current" && ln -s "$NVM_VERSION_DIR" "$NVM_DIR/current"
       fi
       local NVM_USE_OUTPUT
-      if [ $NVM_USE_SILENT -ne 1 ]; then
-        if nvm_is_iojs_version "$VERSION"; then
-          NVM_USE_OUTPUT="Now using io.js $(nvm_strip_iojs_prefix "$VERSION")$(nvm_print_npm_version)"
-        else
-          NVM_USE_OUTPUT="Now using node $VERSION$(nvm_print_npm_version)"
-        fi
-      fi
+      # if [ $NVM_USE_SILENT -ne 1 ]; then
+      #   if nvm_is_iojs_version "$VERSION"; then
+      #     NVM_USE_OUTPUT="Now using io.js $(nvm_strip_iojs_prefix "$VERSION")$(nvm_print_npm_version)"
+      #   else
+      #     NVM_USE_OUTPUT="Now using node $VERSION$(nvm_print_npm_version)"
+      #   fi
+      # fi
       if [ "_$VERSION" != "_system" ]; then
         local NVM_USE_CMD
         NVM_USE_CMD="nvm use --delete-prefix"
@@ -2696,9 +2696,9 @@ nvm() {
         if [ $NVM_USE_SILENT -eq 1 ]; then
           NVM_USE_CMD="$NVM_USE_CMD --silent"
         fi
-        if ! nvm_die_on_prefix "$NVM_DELETE_PREFIX" "$NVM_USE_CMD"; then
-          return 11
-        fi
+        # if ! nvm_die_on_prefix "$NVM_DELETE_PREFIX" "$NVM_USE_CMD"; then
+        #   return 11
+        # fi
       fi
       if [ -n "${NVM_USE_OUTPUT-}" ]; then
         nvm_echo "$NVM_USE_OUTPUT"
